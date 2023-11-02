@@ -1,0 +1,23 @@
+.listItems {
+    list-style: none;
+    display: inline;
+    padding: 10px;
+    margin-right: 5px;
+    border: 1px solid  blueviolet;
+    background-color: chartreuse;
+}
+
+.listItems:hover{
+    background-color: aqua;
+    cursor: pointer;
+}
+
+.button {
+    padding: 3px;
+    background-color: coral;
+}
+
+.button:hover{
+    background-color:crimson ;
+    cursor: pointer;
+}
