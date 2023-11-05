@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as userService from "../services/userService";
-import { formatDateWeekDay, formatDate } from "./utils/dateUtils";
+import { formatDateWeekDay } from "./utils/dateUtils";
 
 const UserInfoModal = ({
     userId,
@@ -31,7 +31,7 @@ const UserInfoModal = ({
                 </header>
                 <div className="content">
                     <div className="image-container">
-                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt=""
+                        <img src={user.imageUrl} alt=""
                             className="image" />
                     </div>
                     <div className="user-details">

@@ -3,17 +3,23 @@ import UserListItem from "./UserListItem";
 import * as userService from "../services/userService";
 import CreateUserModal from './CreateUserModal'
 import UserInfoModal from "./UserInfoModal";
+import DeleteUserModal from "./DeleteUserModal";
+import Spinner from "./Spinner";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
     const [isShownCreateModal, setCreateModal] = useState(false);
     const [isShownInfoModal, setInfoModal] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
+    const [isShownDeleteModal, setShownDeleteModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         userService.getAll()
             .then(res => setUsers(res))
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+            .finally(()=> setIsLoading(false))
     }, []);
 
     const showCreateUserModalHandler = () => {
@@ -49,19 +55,38 @@ const UserListTable = () => {
         setInfoModal(false);
     }
 
+    const onClickDeleteModal = (userId) => {
+        setSelectedUserId(userId);      
+        setShownDeleteModal(true)
+    }
+
+    const closeDelete = () => {
+        setShownDeleteModal(false)
+    }
+
+    const deleteUser = async () =>{
+       
+        await userService.deleteUser(selectedUserId);
+        setUsers(users=>users.filter(x=>x._id !== selectedUserId));
+        setShownDeleteModal(false)
+        
+    }
 
 
     return (
         <>
             <div className="table-wrapper">
-                {/* <!-- Overlap components  -->
+                 {/* <!-- Overlap components  -->
 
-<!-- <div className="loading-shade"> -->
-<!-- Loading spinner  -->
-<!-- <div className="spinner"></div> -->
-<!--         No users added yet  -->
+<!-- <div className="loading-shade"> --> */}
+{/* <!-- Loading spinner  --> */}
 
-<!-- <div className="table-overlap">
+
+{isLoading && <Spinner/>}
+
+{/* <!--         No users added yet  -->
+
+ <!-- <div className="table-overlap">
       <svg
         aria-hidden="true"
         focusable="false"
@@ -78,9 +103,9 @@ const UserListTable = () => {
         ></path>
       </svg>
       <h2>There is no users yet.</h2>
-    </div> -->
+    </div> -->  */}
 
-<!-- No content overlap component  -->
+{/* <!-- No content overlap component  -->
 
 <!-- <div className="table-overlap">
       <svg
@@ -99,9 +124,9 @@ const UserListTable = () => {
         ></path>
       </svg>
       <h2>Sorry, we couldn't find what you're looking for.</h2>
-    </div> -->
+    </div> --> */}
 
-<!-- On error overlap component  -->
+{/* <!-- On error overlap component  -->
 
 <!-- <div className="table-overlap">
       <svg
@@ -121,7 +146,7 @@ const UserListTable = () => {
       </svg>
       <h2>Failed to fetch</h2>
     </div> -->
-<!-- </div> --> */}
+<!-- </div> -->  */}
 
                 {isShownCreateModal &&
                     <CreateUserModal
@@ -133,6 +158,12 @@ const UserListTable = () => {
                     <UserInfoModal
                         userId={selectedUserId}
                         hideInfoModal={hideUserInfoModal}
+                    />}
+
+                {isShownDeleteModal &&
+                    < DeleteUserModal
+                        onCloseDelete={closeDelete}
+                        onDeleteUser={deleteUser}
                     />}
 
                 <table className="table">
@@ -202,7 +233,8 @@ const UserListTable = () => {
                                 createdAt={user.createdAt}
                                 imageUrl={user.imageUrl}
                                 showUserInfo={showUserInfoHandler}
-
+                                onClickDeleteModal={onClickDeleteModal}
+                             
                             />
                         ))}
 

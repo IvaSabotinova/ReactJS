@@ -42,3 +42,10 @@ export const getUser = async (userId) => {
     return result;
 }
 
+export const deleteUser = async (userId) =>{
+    const response = await fetch(`${baseURL}/${userId}`, {
+        method: 'DELETE', 
+    });
+    const result = await response.json();
+    return result;
+}
