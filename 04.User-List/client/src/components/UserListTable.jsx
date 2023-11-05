@@ -131,7 +131,7 @@ const UserListTable = () => {
 
                 {isShownInfoModal &&
                     <UserInfoModal
-                    userId={selectedUserId}
+                        userId={selectedUserId}
                         hideInfoModal={hideUserInfoModal}
                     />}
 

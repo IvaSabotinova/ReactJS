@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import * as userService from "../services/userService";
+import { formatDateWeekDay, formatDate } from "./utils/dateUtils";
 
 const UserInfoModal = ({
     userId,
     hideInfoModal
 
 }) => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({ address: {}});
 
     useEffect(() => {
         userService.getUser(userId)
@@ -43,11 +44,12 @@ const UserInfoModal = ({
                         <p>Phone Number: <strong>{user.phoneNumber}</strong></p>
                         <p>
                             Address:
-                            <strong> {user.address?.country}, {user.address?.city}, {user.address?.street} {user.address?.streetNumber} </strong>
+                            {/* <strong> {user.address?.country}, {user.address?.city}, {user.address?.street} {user.address?.streetNumber} </strong> */}
+                            <strong> {user.address.country}, {user.address.city}, {user.address.street} {user.address.streetNumber} </strong>
                         </p>
 
-                        <p>Created on: <strong>Wednesday, June 28, 2022</strong></p>
-                        <p>Modified on: <strong>Thursday, June 29, 2022</strong></p>
+                        <p>Created on: <strong>{formatDateWeekDay(user.createdAt)}</strong></p>
+                        <p>Modified on: <strong>{formatDateWeekDay(user.updatedAt)}</strong></p>
                     </div>
                 </div>
             </div>
