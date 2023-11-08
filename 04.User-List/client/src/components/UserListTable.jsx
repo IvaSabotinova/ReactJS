@@ -49,7 +49,7 @@ const UserListTable = () => {
     const showUserInfoHandler = async (userId) => {
         setSelectedUserId(userId)
         setInfoModal(true);
-    };
+    };  
 
     const hideUserInfoModal = () => {
         setInfoModal(false);
@@ -61,7 +61,7 @@ const UserListTable = () => {
     }
 
     const closeDelete = () => {
-        setShownDeleteModal(false)
+        setShownDeleteModal(false)      
     }
 
     const deleteUser = async () =>{
