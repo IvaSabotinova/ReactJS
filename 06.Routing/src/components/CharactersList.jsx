@@ -6,11 +6,15 @@ const CharactersList = () => {
    const base_URL = 'https://swapi.dev/api/people/';
    const [characters, setCharacters] = useState([]);
    useEffect(() => {
-      fetch(base_URL)
+      const abortController = new AbortController();
+
+      fetch(base_URL, {signal: abortController.signal})
          .then((res) => res.json())
          .then(data => {
             setCharacters(data.results)
          })
+
+         return () => { abortController.abort();}
    }, [])
 
    return (

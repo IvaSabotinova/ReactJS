@@ -7,7 +7,6 @@ import CharactersList from './components/CharactersList';
 import CharacterDetails from './components/CharacterDetails';
 import NotFound from './components/NotFount';
 
-
 function App() {
 
 
@@ -18,10 +17,15 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='about/*' element={<About />} />
+        {/* <Route path='about/' element={<About />}>
+          <Route path="about-us" element={<AboutUs />}></Route>
+          <Route path="our-mission" element={<Mission />}></Route>
+          <Route path="our-values" element={<Values />}></Route>
+        </Route> */}
         <Route path='contacts' element={<Contacts />} />
-        <Route path='characters' element={<CharactersList/>}/>
-        <Route path='characters/:id' element={<CharacterDetails/>}/>
-        <Route path='*' element={<NotFound/>}/>
+        <Route path='characters' element={<CharactersList />} />
+        <Route path='characters/:id' element={<CharacterDetails />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
       <footer>All rights reserved &copy;</footer>
     </>
