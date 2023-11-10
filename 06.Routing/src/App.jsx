@@ -1,0 +1,27 @@
+import Navigation from './components/Navigation'
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import Contacts from './components/Contacts';
+import About from './components/About';
+import CharactersList from './components/CharactersList';
+
+
+function App() {
+
+
+  return (
+    <>
+      <h1>Routing exercise</h1>
+      <Navigation />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='about' element={<About />} />
+        <Route path='contacts' element={<Contacts />} />
+        <Route path='characters' element={<CharactersList/>}/>
+      </Routes>
+      <footer>All rights reserved &copy;</footer>
+    </>
+  )
+}
+
+export default App
