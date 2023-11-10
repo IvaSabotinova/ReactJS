@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Navigation = () => {
     return (
@@ -18,10 +18,14 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/">Home</Nav.Link>
+                        {/* <Nav.Link as={Link} to="/">Home</Nav.Link>
                         <Nav.Link as={Link} to="/about">About</Nav.Link>
                         <Nav.Link as={Link} to="/contacts">Contacts</Nav.Link>
-                        <Nav.Link as={Link} to="/characters">Star-War-Characters</Nav.Link>
+                        <Nav.Link as={Link} to="/characters">Star-War-Characters</Nav.Link> */}
+                        <Nav.Link as={NavLink} style={({isActive}) => isActive ? {backgroundColor: 'grey'} : {} } to="/">Home</Nav.Link>
+                        <Nav.Link as={NavLink} style={({isActive}) => isActive ? {backgroundColor: 'grey'} : {} } to="/about">About</Nav.Link>
+                        <Nav.Link as={NavLink} style={({isActive}) => isActive ? {backgroundColor: 'grey'} : {} } to="/contacts">Contacts</Nav.Link>
+                        <Nav.Link as={NavLink} style={({isActive}) => isActive ? {backgroundColor: 'grey'} : {} } to="/characters">Star-War-Characters</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
