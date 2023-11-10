@@ -1,0 +1,1 @@
+export const normalizedName = (name) => name.replace(/ /g, '-').toLowerCase();

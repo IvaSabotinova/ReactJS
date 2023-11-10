@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import CharactersListItem from "./CharactersListItem";
+import styles from "./CharactersList.module.css"
 
 const CharactersList = () => {
    const base_URL = 'https://swapi.dev/api/people/';
@@ -12,14 +13,14 @@ const CharactersList = () => {
          })
    }, [])
 
-   return (<>
+   return (
       <>
          <h3>All Star Wars Characters</h3>
-         <ul>
-            {characters.map(x => <li key={x.name}><CharactersListItem  {...x} /></li>)}
-         </ul>
+         <div className={styles.charactersList}>
+            {characters.map((x, index) => <CharactersListItem key={x.name} id={index + 1}  {...x} />)}
+         </div>
       </>
-   </>);
+   );
 }
 
 export default CharactersList;

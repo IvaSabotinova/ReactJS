@@ -4,6 +4,8 @@ import Home from './components/Home';
 import Contacts from './components/Contacts';
 import About from './components/About';
 import CharactersList from './components/CharactersList';
+import CharacterDetails from './components/CharacterDetails';
+import NotFound from './components/NotFount';
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
         <Route path='about' element={<About />} />
         <Route path='contacts' element={<Contacts />} />
         <Route path='characters' element={<CharactersList/>}/>
+        <Route path='characters/:id' element={<CharacterDetails/>}/>
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
       <footer>All rights reserved &copy;</footer>
     </>
