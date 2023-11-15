@@ -13,7 +13,7 @@ function App() {
       <Header />
       <Routes>
        <Route path="/" element={<Home />} /> 
-       <Route path="game-list" element={<GameList />} /> 
+       <Route path="games" element={<GameList />} /> 
        <Route path="game-create" element={<GameCreate />} /> 
        <Route path="login" element={<Login />} /> 
        <Route path="register" element={<Register />} /> 
