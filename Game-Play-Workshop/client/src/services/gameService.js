@@ -14,3 +14,8 @@ export const createGame = async (gameData) => {
 
   return result;
 }
+
+export const getGameDetails = async(gameId) =>{
+  const result = await libRequest.get(`${baseUrl}/${gameId}`)
+  return result;
+}

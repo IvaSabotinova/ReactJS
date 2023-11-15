@@ -2,7 +2,6 @@ import './create-edit.css';
 import * as gameService from '../../services/gameService';
 import { useNavigate } from 'react-router-dom';
 
-
 const GameCreate = () => {
 
     const navigate = useNavigate();
