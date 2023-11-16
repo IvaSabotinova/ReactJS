@@ -15,7 +15,7 @@ const request = async (method, url, data) => {
         method,
         ...buildOptions(data)
     })
-
+    
     const result = await response.json();
     return result;
 }
