@@ -23,7 +23,7 @@ function App() {
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify(values)
+      body: JSON.stringify({...values, isCompleted: false})
     })
 
     const result = await response.json();
@@ -33,7 +33,6 @@ function App() {
   }
 
   const onClickShowModal = (e) => {
-    //  e.preventDefault();
     setShownModal(true);
 
   }
@@ -48,8 +47,24 @@ function App() {
     setToDos(state => state.filter(x => x._id !== id));
   }
 
+  const onClickCompleted = async (id) => {
+
+    const currToDo = toDos.find(x => x._id === id);
+
+    const response = await fetch(`${baseUrl}/${id}`,
+      {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ ...currToDo,  isCompleted: !currToDo.isCompleted })
+      });
+
+
+    setToDos(state => state.map(x => x._id === id ? { ...x, isCompleted: !x.isCompleted } : x));
+  }
+
   const contextValue = {
-    onClickDelete
+    onClickDelete,
+    onClickCompleted
   }
 
   return (
