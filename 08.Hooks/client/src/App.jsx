@@ -3,6 +3,7 @@ import Header from './components/Header';
 import ToDoList from './components/ToDoList';
 import { useEffect, useState } from 'react';
 import AddToDoModal from './components/AddToDoModal';
+import { ToDoContext } from './contexts/ToDoContext';
 
 function App() {
   const [toDos, setToDos] = useState([]);
@@ -45,15 +46,19 @@ function App() {
     const response = await fetch(`${baseUrl}/${id}`, { method: 'DELETE' });
 
     setToDos(state => state.filter(x => x._id !== id));
+  }
 
+  const contextValue = {
+    onClickDelete
   }
 
   return (
     <>
-      <Header />
-      <ToDoList toDos={toDos} onClickShowModal={onClickShowModal} onClickDelete={onClickDelete} />
-      <AddToDoModal isShown={isShownModal} onToDoSubmit={onToDoSubmit} closeModalHandler={closeModalHandler} />
-
+      <ToDoContext.Provider value={contextValue}>
+        <Header />
+        <ToDoList toDos={toDos} onClickShowModal={onClickShowModal} />
+        <AddToDoModal isShown={isShownModal} onToDoSubmit={onToDoSubmit} closeModalHandler={closeModalHandler} />
+      </ToDoContext.Provider>
     </>
   )
 }
