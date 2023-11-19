@@ -6,6 +6,7 @@ import About from './components/About';
 import CharactersList from './components/CharactersList';
 import CharacterDetails from './components/CharacterDetails';
 import NotFound from './components/NotFount';
+import TestCarousel from './components/Test-carousel';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path='characters' element={<CharactersList />} />
         <Route path='characters/:id' element={<CharacterDetails />} />
         <Route path='*' element={<NotFound />} />
+        <Route path='test' element={<TestCarousel />} />
       </Routes>
       <footer>All rights reserved &copy;</footer>
     </>

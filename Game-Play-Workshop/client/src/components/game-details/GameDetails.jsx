@@ -36,8 +36,9 @@ const GameDetails = () => {
         const newComment = await commentService.createComment(gameId, formValues.username, formValues.comment);
 
         setComments(state => [...state, newComment]);
-        document.querySelector('input[name="username"]').value = '';
-        document.querySelector('textarea[name="comment"]').value = '';
+        setFormValues(formInitialValues)
+        // document.querySelector('input[name="username"]').value = '';
+        // document.querySelector('textarea[name="comment"]').value = '';
     }
 
     const formHandler = (e) => {
@@ -81,8 +82,8 @@ const GameDetails = () => {
         <article className="create-comment">
             <label>Add new comment:</label>
             <form className="form" onSubmit={createCommentHandler}>
-                <input type="text" name="username" placeholder="username" onChange={formHandler} />
-                <textarea name="comment" placeholder="Comment......" onChange={formHandler}></textarea>
+                <input type="text" name="username" value={formValues.username} placeholder="username" onChange={formHandler} />
+                <textarea name="comment" value={formValues.comment} placeholder="Comment......" onChange={formHandler}></textarea>
                 <input className="btn submit" type="submit" value="Add Comment" />
             </form>
         </article>
