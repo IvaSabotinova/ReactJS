@@ -1,26 +1,31 @@
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { Button, Modal, Form } from 'react-bootstrap';
+import { useForm } from '../hooks/useForm'
 
-export default function AddToDoModal(){
-    return(
-        <div
-        className="modal show"
-        style={{ display: 'block', position: 'initial' }}
-      >
-        <Modal show={true}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal title</Modal.Title>
-          </Modal.Header>
-  
-          <Modal.Body>
-            <p>Modal body text goes here.</p>
-          </Modal.Body>
-  
-          <Modal.Footer>
-            <Button variant="secondary">Close</Button>
-            <Button variant="primary">Save changes</Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-    );
+export default function AddToDoModal({
+  onToDoSubmit,
+  isShown,
+  closeModalHandler
+}) {
+  const { formValues, changeHandler, onSubmit } = useForm({ text: '' }, onToDoSubmit);
+
+  return (
+    <div className="modal show" style={{ display: 'block', position: 'initial' }}>
+      <Modal show={isShown} onHide={closeModalHandler} onEscapeKeyDown={closeModalHandler}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add To Do Tasks</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form onSubmit={onSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>To Do</Form.Label>
+              <Form.Control type="text" name="text" placeholder="put some task" value={formValues.name} onChange={changeHandler} />
+            </Form.Group>
+            <Button variant="primary" type="submit" >Submit</Button>
+            <Button variant="secondary" style={{ marginLeft: '10px' }} onClick={closeModalHandler}>Close</Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
 }

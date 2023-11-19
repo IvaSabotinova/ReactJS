@@ -1,13 +1,17 @@
-import {ListGroup} from 'react-bootstrap'
+import { ListGroup, Button } from 'react-bootstrap';
 
 export default function ToDoListItem({
     _id,
     text,
-    isCompleted
+    isCompleted,
+    onClickDelete
 }) {
     return (
-        <ListGroup.Item action >
-            {_id} - {text}
-        </ListGroup.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <ListGroup.Item action >
+                {_id} - {text}
+            </ListGroup.Item>
+            <Button variant="dark" onClick={() => onClickDelete(_id)}>X</Button>
+        </div>
     );
 }
