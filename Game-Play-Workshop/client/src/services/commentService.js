@@ -2,14 +2,17 @@ import * as libRequest from '../lib/request';
 
 const baseUrl = 'http://localhost:4000/data/comments';
 
-export const createComment = async (gameId, username, text) => {
-    const result = await libRequest.post(baseUrl, { gameId, username, text });
+export const createComment = async (gameId, text) => {
+    const result = await libRequest.post(baseUrl, { gameId, text });
     return result;
 
 }
 
 export const getCommentsPerGame = async (gameId) => {
-    const query = new URLSearchParams({ where: `gameId="${gameId}"` });
+    const query = new URLSearchParams({ 
+        where: `gameId="${gameId}"`,
+        load: `owner=_ownerId:users`
+    });
 
     const result = await libRequest.get(`${baseUrl}?${query}`);
 
