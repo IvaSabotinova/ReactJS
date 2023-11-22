@@ -41,7 +41,7 @@ const GameDetails = () => {
         // document.querySelector('textarea[name="comment"]').value = '';
     }
 
-    const formHandler = (e) => {
+    const changeHandler = (e) => {
         setFormValues(state => ({ ...state, [e.target.name]: e.target.value }));
     }
 
@@ -82,8 +82,8 @@ const GameDetails = () => {
         <article className="create-comment">
             <label>Add new comment:</label>
             <form className="form" onSubmit={createCommentHandler}>
-                <input type="text" name="username" value={formValues.username} placeholder="username" onChange={formHandler} />
-                <textarea name="comment" value={formValues.comment} placeholder="Comment......" onChange={formHandler}></textarea>
+                <input type="text" name="username" value={formValues.username} placeholder="username" onChange={changeHandler} />
+                <textarea name="comment" value={formValues.comment} placeholder="Comment......" onChange={changeHandler}></textarea>
                 <input className="btn submit" type="submit" value="Add Comment" />
             </form>
         </article>
