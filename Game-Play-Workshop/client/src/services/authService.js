@@ -13,3 +13,5 @@ export const Register = (email, password) => {
     return result;
 }
 
+export const Logout = () => libRequest.get(`${baseUrl}/logout`);
+
