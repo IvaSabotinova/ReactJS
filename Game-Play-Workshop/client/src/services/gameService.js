@@ -1,10 +1,10 @@
 import * as libRequest from '../lib/request';
 
-const baseUrl = 'http://localhost:4000/jsonstore/games';
+const baseUrl = 'http://localhost:4000/data/games';
 
 export const getAll = async () => {
   const result = await libRequest.get(baseUrl);
-  return Object.values(result);
+  return result;
 
 }
 
