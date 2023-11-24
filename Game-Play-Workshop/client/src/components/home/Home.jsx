@@ -1,6 +1,10 @@
+import withAuth from '../../HOC/withAuth';
 import './home.css';
 
-export default function Home() {
+const Home =  ({
+    email,
+    username
+}) => {
     return (
         <section id="welcome-world">
             <div className="welcome-message">
@@ -49,8 +53,14 @@ export default function Home() {
                 </div>
 
                 <p className="no-articles">No games yet</p>
+                <p>{username}</p>
+                <p>{email}</p>
             </div>
         </section>
     );
 }
+
+const EnhancedHome = withAuth(Home);
+
+export default EnhancedHome;
 

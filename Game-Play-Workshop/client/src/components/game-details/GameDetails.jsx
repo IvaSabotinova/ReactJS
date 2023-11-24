@@ -1,12 +1,13 @@
 import './game-details.css';
 import './comments.css';
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
 
 import * as gameService from '../../services/gameService';
 import * as commentService from '../../services/commentService';
 import AuthContext from '../../context/AuthContext';
+import reducer from './commentsReducer';
 
 const formInitialValues = {
     username: '',
@@ -17,7 +18,8 @@ const GameDetails = () => {
     const { email } = useContext(AuthContext)
     const [game, setGame] = useState({});
     const [formValues, setFormValues] = useState(formInitialValues);
-    const [comments, setComments] = useState([]);
+    // const [comments, setComments] = useState([]);
+    const [comments, dispatch] = useReducer(reducer, []);
     const { gameId } = useParams();
 
     useEffect(() => {
@@ -25,7 +27,12 @@ const GameDetails = () => {
             .then(setGame);
 
         commentService.getCommentsPerGame(gameId)
-            .then(setComments)
+            .then((result) => {
+                dispatch({
+                    type: 'GET_ALL_COMMENTS',
+                    payload: result
+                })
+            })
     }, [gameId]);
 
 
@@ -38,7 +45,12 @@ const GameDetails = () => {
 
         const newComment = await commentService.createComment(gameId, formValues.comment);
 
-        setComments(state => [...state, { ...newComment, owner: { email } }]);
+        //setComments(state => [...state, { ...newComment, owner: { email } }]);
+        newComment.owner = { email };
+        dispatch({
+            type: 'CREATE_NEW_COMMENT',
+            payload: newComment
+        })
         setFormValues(formInitialValues)
         // document.querySelector('input[name="username"]').value = '';
         // document.querySelector('textarea[name="comment"]').value = '';
