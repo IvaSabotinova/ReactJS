@@ -1,13 +1,17 @@
 import './game-details.css';
 import './comments.css';
 
-import { useState, useEffect, useContext, useReducer } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect, useContext, useReducer, useMemo } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 import * as gameService from '../../services/gameService';
 import * as commentService from '../../services/commentService';
 import AuthContext from '../../context/AuthContext';
 import reducer from './commentsReducer';
+import useForm from '../../hooks/useForm';
+import {pathToUrl} from '../../utils/pathUtil';
+import Path from '../../paths'
+
 
 const formInitialValues = {
     username: '',
@@ -15,9 +19,9 @@ const formInitialValues = {
 }
 
 const GameDetails = () => {
-    const { email } = useContext(AuthContext)
+    const { userId, email } = useContext(AuthContext)
     const [game, setGame] = useState({});
-    const [formValues, setFormValues] = useState(formInitialValues);
+    // const [formValues, setFormValues] = useState(formInitialValues);
     // const [comments, setComments] = useState([]);
     const [comments, dispatch] = useReducer(reducer, []);
     const { gameId } = useParams();
@@ -37,8 +41,8 @@ const GameDetails = () => {
 
 
 
-    const createCommentHandler = async (e) => {
-        e.preventDefault();
+    const createCommentHandler = async (formValues) => {
+        // e.preventDefault();
 
         // const formData = new FormData(e.currentTarget);
         // const newComment = await commentService.createComment(gameId, formData.get('username'), formData.get('comment'));
@@ -50,15 +54,25 @@ const GameDetails = () => {
         dispatch({
             type: 'CREATE_NEW_COMMENT',
             payload: newComment
-        })
-        setFormValues(formInitialValues)
+        });
+
+
+
+        // setFormValues(formInitialValues)
         // document.querySelector('input[name="username"]').value = '';
         // document.querySelector('textarea[name="comment"]').value = '';
     }
 
-    const changeHandler = (e) => {
-        setFormValues(state => ({ ...state, [e.target.name]: e.target.value }));
-    }
+    // const changeHandler = (e) => {
+    //     setFormValues(state => ({ ...state, [e.target.name]: e.target.value }));
+    // }
+
+    //temp solution for edit
+    const commentInitialValue = useMemo(() => ({
+        comment: ''
+    }), [])
+
+    const { formValues, onChange, onSubmit } = useForm(commentInitialValue, createCommentHandler);
 
 
     return (<section id="game-details">
@@ -87,18 +101,18 @@ const GameDetails = () => {
                 </ul>
                 {comments.length === 0 && (<p className="no-comment">No comments.</p>)}
             </div>
+            {userId === game._ownerId && (<div className="buttons">
+                <Link to={pathToUrl(Path.GameEdit, {gameId})} className="button">Edit</Link>
+                <Link to="/games/:gameId/delete" className="button">Delete</Link>
+            </div>)}
 
-            <div className="buttons">
-                <a href="#" className="button">Edit</a>
-                <a href="#" className="button">Delete</a>
-            </div>
         </div>
 
         <article className="create-comment">
             <label>Add new comment:</label>
-            <form className="form" onSubmit={createCommentHandler}>
+            <form className="form" onSubmit={onSubmit}>
                 {/* <input type="text" name="username" value={formValues.username} placeholder="username" onChange={changeHandler} /> */}
-                <textarea name="comment" value={formValues.comment} placeholder="Comment......" onChange={changeHandler}></textarea>
+                <textarea name="comment" value={formValues.comment} placeholder="Comment......" onChange={onChange}></textarea>
                 <input className="btn submit" type="submit" value="Add Comment" />
             </form>
         </article>

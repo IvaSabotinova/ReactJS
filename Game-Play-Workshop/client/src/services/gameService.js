@@ -19,3 +19,8 @@ export const getGameDetails = async(gameId) =>{
   const result = await libRequest.get(`${baseUrl}/${gameId}`)
   return result;
 }
+
+export const editGameById = async (gameId, gameData) =>{
+  const result = await libRequest.put(`${baseUrl}/${gameId}`, gameData);
+  return result;
+}
