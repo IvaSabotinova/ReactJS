@@ -1,6 +1,6 @@
 import * as libRequest from '../lib/request';
 
-const baseUrl = 'http://localhost:4000/data/comments';
+const baseUrl = 'http://localhost:3900/data/comments';
 
 export const createComment = async (gameId, text) => {
     const result = await libRequest.post(baseUrl, { gameId, text });

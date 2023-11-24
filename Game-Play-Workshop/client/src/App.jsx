@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-import * as authService from './services/authService'
-import AuthContext from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import Path from './paths';
 
 import Header from "./components/header/Header";
@@ -16,47 +14,10 @@ import GameDetails from "./components/game-details/GameDetails";
 
 
 function App() {
-  const [auth, setAuth] = useState(() => {
-    localStorage.removeItem('accessToken');
-        return {}
-  });
-  const navigate = useNavigate();
-
-  const loginSubmitHandler = async (values) => {
-    const result = await authService.Login(values);
-    console.log(result);
-    setAuth(result);
-    localStorage.setItem('accessToken', result.accessToken);
 
 
-    navigate(Path.Home);
-  }
-
-  const registerSubmitHandler = async (values) => {
-    const result = await authService.Register(values.email, values.password);
-    console.log(result)
-    setAuth(result);
-    localStorage.setItem('accessToken', result.accessToken);
-    navigate(Path.Home);
-  };
-
-  const logOutHandler = () => {
-    setAuth({});
-    localStorage.removeItem('accessToken');
-    navigate(Path.Home);
-  }
-
-
-  const contextValues = {
-    registerSubmitHandler,
-    loginSubmitHandler,
-    logOutHandler,
-    email: auth.email,
-    username: auth.username || auth.email,
-    isAuthenticated: !!auth.accessToken
-  }
   return (
-    <AuthContext.Provider value={contextValues}>
+    <AuthProvider>
       <div id="box">
         <Header />
         <Routes>
@@ -69,7 +30,7 @@ function App() {
           <Route path="logout" element={<Logout />} />
         </Routes>
       </div>
-    </AuthContext.Provider>
+    </AuthProvider>
   )
 }
 

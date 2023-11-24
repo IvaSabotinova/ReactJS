@@ -1,6 +1,6 @@
 import * as libRequest from '../lib/request';
 
-const baseUrl = 'http://localhost:4000/data/games';
+const baseUrl = 'http://localhost:3900/data/games';
 
 export const getAll = async () => {
   const result = await libRequest.get(baseUrl);
