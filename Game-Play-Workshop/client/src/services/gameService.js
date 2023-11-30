@@ -24,3 +24,15 @@ export const editGameById = async (gameId, gameData) =>{
   const result = await libRequest.put(`${baseUrl}/${gameId}`, gameData);
   return result;
 }
+
+export const getLatest = async () =>{
+//   const query = new URLSearchParams({
+//     // sortBy: `_createdOn desc`,
+//     offset: 0,
+//     pageSize: 3,
+// });
+  const result = await libRequest.get(`${baseUrl}?sortBy=_createdOn desc&offset=0&pageSize=3`);
+  return result;
+}
+
+export const deleteGameById = async (gameId) => await libRequest.remove(`${baseUrl}/${gameId}`);

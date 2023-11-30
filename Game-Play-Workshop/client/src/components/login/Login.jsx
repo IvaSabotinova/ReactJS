@@ -43,9 +43,7 @@ const Login = ({
 
                     <input type="submit" className="btn submit" value="Login" />
                     <p className="field">
-                        <span>If you don't have profile click <a href="#">he
-
-                            re</a></span>
+                        <span>If you don't have profile click <a href="#">here</a></span>
                     </p>
                 </div>
             </form>

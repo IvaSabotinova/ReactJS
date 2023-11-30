@@ -21,8 +21,6 @@ export const AuthProvider = ({
         console.log(result);
         setAuth(result);
         localStorage.setItem('accessToken', result.accessToken);
-
-
         navigate(Path.Home);
     }
 

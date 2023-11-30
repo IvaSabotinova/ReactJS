@@ -2,14 +2,14 @@ import './game-details.css';
 import './comments.css';
 
 import { useState, useEffect, useContext, useReducer, useMemo } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import * as gameService from '../../services/gameService';
 import * as commentService from '../../services/commentService';
 import AuthContext from '../../context/AuthContext';
 import reducer from './commentsReducer';
 import useForm from '../../hooks/useForm';
-import {pathToUrl} from '../../utils/pathUtil';
+import { pathToUrl } from '../../utils/pathUtil';
 import Path from '../../paths'
 
 
@@ -25,6 +25,7 @@ const GameDetails = () => {
     // const [comments, setComments] = useState([]);
     const [comments, dispatch] = useReducer(reducer, []);
     const { gameId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         gameService.getGameDetails(gameId)
@@ -56,8 +57,6 @@ const GameDetails = () => {
             payload: newComment
         });
 
-
-
         // setFormValues(formInitialValues)
         // document.querySelector('input[name="username"]').value = '';
         // document.querySelector('textarea[name="comment"]').value = '';
@@ -68,11 +67,27 @@ const GameDetails = () => {
     // }
 
     //temp solution for edit
-    const commentInitialValue = useMemo(() => ({
-        comment: ''
-    }), [])
+    // const commentInitialValue = useMemo(() => ({
+    //     comment: ''
+    // }), [])
 
-    const { formValues, onChange, onSubmit } = useForm(commentInitialValue, createCommentHandler);
+    const { formValues, onChange, onSubmit } = useForm({
+             comment: ''
+         }, createCommentHandler);
+
+    const onClickDeleteHandler = async (e) => {
+        const hasConfirmed = confirm(`Are you sure you want to delete ${game.title}`);
+        if (hasConfirmed) {
+            await gameService.deleteGameById(gameId);
+            navigate(Path.All)
+        }
+
+    }
+
+    //For errorBoundary
+    // if (Math.random() < 0.5){
+    //     throw new Error('Game details error!');
+    // }
 
 
     return (<section id="game-details">
@@ -102,8 +117,8 @@ const GameDetails = () => {
                 {comments.length === 0 && (<p className="no-comment">No comments.</p>)}
             </div>
             {userId === game._ownerId && (<div className="buttons">
-                <Link to={pathToUrl(Path.GameEdit, {gameId})} className="button">Edit</Link>
-                <Link to="/games/:gameId/delete" className="button">Delete</Link>
+                <Link to={pathToUrl(Path.GameEdit, { gameId })} className="button">Edit</Link>
+                <button className="button" onClick={onClickDeleteHandler}>Delete</button>          
             </div>)}
 
         </div>

@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 export default function useForm(initialValues, onSubmitHandler) {
     const [formValues, setFormValues] = useState(initialValues);
 
-    //temp solution for edit
-    useEffect(()=>{
-        setFormValues(initialValues);
-    }, [initialValues])
+    // useEffect(()=>{
+    //     setFormValues(initialValues);
+    // }, [initialValues])
 
     const onSubmit = async (e) => {
         e.preventDefault();
